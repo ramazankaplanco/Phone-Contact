@@ -1,0 +1,100 @@
+﻿@model List<PhoneContact.DataAccess.Concrete.DTO.User>
+
+@{
+    ViewBag.Title = "Admin UI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Data Table -->
+<table id="userTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top:2%">
+    <caption><strong>Kullanıcılar Listesi</strong></caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Kullanıcı Adı</th>
+            <th scope="col">Kullanıcı Soyadı</th>
+            <th scope="col">Takma Adı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td class="userId">@user.Id</td>
+                    <td class="userName">@user.UserName</td>
+                    <td class="userLastName">@user.UserLastName</td>
+                    <td class="userNickName">@user.UserNickName</td>
+                    <td class="userPassword" hidden>@user.UserPassword</td>
+                    <td class="userNote">@user.UserNote</td>
+                    <td>
+                        <button type="button" class="editUser btn btn-primary" data-toggle="modal" data-target="#userEditModal">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<!-- Add/Edit Modal -->
+<div class="modal" id="userEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="modal-title">Düzenle</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="submitForm" action="/User/Post" method="post" role="form">
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" id="Id" name="Id">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UserName" class="col-form-label">Kullanıcı Adı (*)</label>
+                        <input type="text" required class="form-control" id="UserName" name="UserName" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UserLastName" class="row-form-label">Kullanıcı Soyadı (*)</label>
+                        <input type="text" required class="form-control" id="UserLastName" name="UserLastName" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UserPassword" class="row-form-label">Şifre (*)</label>
+                        <input type="password" required class="form-control" id="UserPassword" name="UserPassword" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UserNickName" class="row-form-label">Takma Adı (*)</label>
+                        <input type="text" required class="form-control" id="UserNickName" name="UserNickName" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UserNote" class="col-form-label">Açıklama</label>
+                        <textarea class="form-control" name="UserNote" id="UserNote" value=""></textarea>
+                    </div>
+
+                    <div class="form-group float-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            @* <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Login</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+
+<div class="LI-profile-badge" data-version="v1" data-size="medium" data-locale="tr_TR" data-type="vertical" data-theme="dark" data-vanity="ramazankaplan"><a class="LI-simple-link" href='https://tr.linkedin.com/in/ramazankaplan?trk=profile-badge'>Ramazan Kaplan</a></div>

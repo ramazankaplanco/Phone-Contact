@@ -1,5 +1,8 @@
-﻿using System.Web;
+﻿#region 
+
 using System.Web.Optimization;
+
+#endregion
 
 namespace PhoneContact
 {
@@ -18,6 +21,11 @@ namespace PhoneContact
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/customScript").Include(
+					  "~/Scripts/customScript/employee.js",
+					  "~/Scripts/customScript/user.js", 
+					  "~/Scripts/customScript/department.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",

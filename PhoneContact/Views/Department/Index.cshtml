@@ -1,0 +1,90 @@
+﻿@model List<PhoneContact.DataAccess.Concrete.DTO.Department>
+
+@{
+    ViewBag.Title = "Admin UI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Data Table -->
+<table id="departmanTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top:2%">
+    <caption><strong>Departman Listesi</strong></caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Departman Adı</th>
+            <th scope="col">Departman Kodu</th>
+            <th scope="col">Açıklama</th>
+            <th scope="col">
+                <button type="button" class="newDepartment btn btn-primary small" data-toggle="modal" data-target="#departmentEditModal">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var department in Model)
+            {
+                <tr>
+                    <td class="departmentId">@department.Id</td>
+                    <td class="departmentName">@department.DepartmentName</td>
+                    <td class="departmentCode">@department.DepartmentCode</td>
+                    <td class="departmentNote">@department.DepartmentNote</td>
+                    <td>
+                        <button type="button" class="editDepartment btn btn-info small" data-toggle="modal" data-target="#departmentEditModal">
+                            <i class="fa fa-edit"></i>
+                        </button>
+
+                        <button type="button" class="deleteDepartment btn btn-danger small">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<!-- Add/Edit Modal -->
+<div class="modal" id="departmentEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Departman Ekle/Düzenle</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="submitForm" action="/Department/Post" method="post" role="form">
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" id="Id" name="Id">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DepartmentName" class="col-form-label">Departman Adı (*)</label>
+                        <input type="text" required class="form-control" id="DepartmentName" name="DepartmentName" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DepartmentCode" class="row-form-label">Departman Kodu (*)</label>
+                        <input type="text" required class="form-control" id="DepartmentCode" name="DepartmentCode" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DepartmentNote" class="col-form-label">Açıklama</label>
+                        <textarea class="form-control" name="DepartmentNote" id="DepartmentNote" value=""></textarea>
+                    </div>
+
+                    <div class="form-group float-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            @*<div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Login</button>
+                </div>*@
+        </div>
+    </div>
+</div>
