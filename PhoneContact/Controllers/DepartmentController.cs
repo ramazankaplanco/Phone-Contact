@@ -35,7 +35,7 @@ namespace PhoneContact.Controllers
 		}
 
 		/// <summary>
-		/// TODO : Departman silinirken, departman aldında çalışan varsa silme işlemine izin verilmeyecek
+		/// TODO: Departman silinirken, departman aldında çalışan varsa silme işlemine izin verilmeyecek
 		/// </summary>
 		/// <param name="department"></param>
 		/// <returns></returns>
