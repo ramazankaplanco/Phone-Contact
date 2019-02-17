@@ -9,46 +9,46 @@ using System.Web.Mvc;
 
 namespace PhoneContact.Controllers
 {
-	public class UserController : Controller
-	{
-		public ActionResult Index()
-		{
-			var session = Session["User"]?.ToString();
+    public class UserController : Controller
+    {
+        public ActionResult Index()
+        {
+            var session = Session["User"]?.ToString();
 
-			if (session == null)
-				return RedirectToAction("Index", "PublicUI");
+            if (session == null)
+                return RedirectToAction("Index", "PublicUI");
 
-			var users = DatabaseUtil.UserService.GetList().Data;
+            var users = DatabaseUtil.UserService.GetList().Data;
 
-			return View(users);
-		}
+            return View(users);
+        }
 
-		[System.Web.Mvc.HttpPost]
-		public ActionResult Login(string userNickName, string userPassword)
-		{
-			var user = DatabaseUtil.UserService.GetByNickname(userNickName, userPassword).Data;
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Login(string userNickName, string userPassword)
+        {
+            var user = DatabaseUtil.UserService.GetByNickname(userNickName, userPassword).Data;
 
-			if (user == null)
-			{
-				Session["User"] = null;
+            if (user == null)
+            {
+                Session["User"] = null;
 
-				return RedirectToAction("Index", "PublicUI");
-			}
-			else
-				Session["User"] = userNickName;
+                return RedirectToAction("Index", "PublicUI");
+            }
 
-			return RedirectToAction("Index", "User");
-		}
+            Session["User"] = userNickName;
 
-		[System.Web.Mvc.HttpPost]
-		public ActionResult Post([FromBody]User user)
-		{
-			if (user.Id > 0)
-				DatabaseUtil.UserService.UpdateById(user.Id, user);
-			else
-				DatabaseUtil.UserService.Add(user);
+            return RedirectToAction("Index", "User");
+        }
 
-			return RedirectToAction("Index", "User");
-		}
-	}
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Post([FromBody]User user)
+        {
+            if (user.Id > 0)
+                DatabaseUtil.UserService.UpdateById(user.Id, user);
+            else
+                DatabaseUtil.UserService.Add(user);
+
+            return RedirectToAction("Index", "User");
+        }
+    }
 }

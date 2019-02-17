@@ -35,7 +35,7 @@ namespace PhoneContact.Controllers
 		}
 
 		/// <summary>
-		/// TODO: Departman silinirken, departman aldında çalışan varsa silme işlemine izin verilmeyecek
+		/// TODO: If department entity has connection to other tables, it can not delete...
 		/// </summary>
 		/// <param name="department"></param>
 		/// <returns></returns>

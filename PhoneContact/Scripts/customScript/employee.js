@@ -50,7 +50,7 @@
 
     $(document).on("click", "#employeeTable button.deleteEmployee", function () {
 
-        var result = confirm("Silme işlemini onaylıyor musunuz?");
+        var result = confirm("Are you sure?");
 
         if (result == true) {
             let tr = $(this).closest('tr');
