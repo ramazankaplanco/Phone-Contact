@@ -4,7 +4,6 @@
 
 @{
     ViewBag.Title = "Public UI";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Data Table -->
@@ -234,3 +233,7 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/employee")
+}

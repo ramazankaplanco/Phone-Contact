@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Admin UI";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Data Table -->
@@ -94,6 +93,9 @@
         </div>
     </div>
 </div>
+@section scripts{
+    @Scripts.Render("~/bundles/user")
+}
 
 <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 
