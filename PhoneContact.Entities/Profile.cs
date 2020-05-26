@@ -8,20 +8,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhoneContact.Entities
 {
-	public class Profile : EntityBase
-	{
-		[Required]
-		[MaxLength(64)]
-		public string Name { get; set; }
+    public class Profile : EntityBase
+    {
+        [Required]
+        [MaxLength(64)]
+        public string Name { get; set; }
 
-		[Required]
-		[MaxLength(64)]
-		public string LastName { get; set; }
+        [Required]
+        [MaxLength(64)]
+        public string LastName { get; set; }
 
-		public string Note { get; set; }
+        [MaxLength(4096)]
+        public string Note { get; set; }
 
 
-		[NotMapped]
-		public string FullName => $"{Name} {LastName}";
-	}
+        [NotMapped]
+        public string FullName => $"{Name} {LastName}";
+    }
 }
