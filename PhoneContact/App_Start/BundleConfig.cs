@@ -35,10 +35,13 @@ namespace PhoneContact
                       "~/Scripts/customScript/department.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/font-awesome.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            //BundleTable.EnableOptimizations = true;
+#if !DEBUG
+            BundleTable.EnableOptimizations = true;
+#endif
         }
     }
 }
