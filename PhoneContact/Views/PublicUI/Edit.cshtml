@@ -1,0 +1,89 @@
+﻿@using PhoneContact.Business
+<div class="modal fade" id="employeeEditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="modal-title">Employee Add/Edit</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="employeeFrom" action="/PublicUI/Post" method="post">
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" id="Id" name="Id">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="EmployeeName" class="col-form-label">Employee Name<span class="text-danger"> *</span></label>
+                                <input required type="text" class="form-control" id="EmployeeName" name="EmployeeName" maxlength="64">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="EmployeeLastName" class="col-form-label">Last Name<span class="text-danger"> *</span></label>
+                                <input required type="text" class="form-control" id="EmployeeLastName" name="EmployeeLastName" maxlength="64">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="EmployeePhone" class="col-form-label">Phone <span class="text-danger"> *</span></label>
+                                <input required type="text" class="form-control" id="EmployeePhone" name="EmployeePhone" maxlength="32">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="DepartmentId" class="col-form-label">Department</label>
+                                <select id="DepartmentId" name="DepartmentId" class="form-control">
+                                    <option value="">Select...</option>
+                                    @{
+                                        foreach (var item in DatabaseUtil.DepartmentService.GetList().Data)
+                                        {
+                                            <option value="@item.Id">@item.DepartmentName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="EmployerId" class="col-form-label">Employer</label>
+                            <select id="EmployerId" name="EmployerId" class="form-control">
+                                <option value="">Select...</option>
+                                @{
+                                    foreach (var item in DatabaseUtil.EmployeeService.GetList().Data)
+                                    {
+                                        <option value="@item.Id">@item.EmployeeFullName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="EmployeeNote" class="col-form-label">Note</label>
+                                <textarea class="form-control" name="EmployeeNote" id="EmployeeNote" maxlength="4096"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="employeeFrom">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,13 @@
-﻿@using PhoneContact.Business;
-
-@model List<PhoneContact.DataAccess.Concrete.DTO.Employee>
-
+﻿@model List<PhoneContact.DataAccess.Concrete.DTO.Employee>
+@{ var isAuthorized = Session["User"]?.ToString() != null;}
 @{
     ViewBag.Title = "Public UI";
 }
-
 <!-- Data Table -->
-<table class="table table-striped table-hover table-responsive-lg border" id="employeeTable" style="margin-top:2%">
-    <caption><strong>Employee List</strong></caption>
+<table class="table table-striped table-hover table-responsive-lg border" id="employeeTable" style="margin-top: 2%">
+    <caption>
+        <strong>Employee List</strong>
+    </caption>
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -17,14 +16,15 @@
             <th scope="col">Phone</th>
             <th scope="col">Note</th>
             @{
-                if (Session["User"]?.ToString() != null)
+                if (isAuthorized)
                 {
                     <th scope="col">
-                        <button type="button" class="newEmployee btn btn-primary small" data-toggle="modal" data-target="#editEmployeeModal">
+                        <button type="button" class="newEmployee btn btn-primary small" data-toggle="modal" data-target="#employeeEditModal">
                             <i class="fa fa-plus"></i>
                         </button>
                     </th>
-                } }
+                }
+            }
         </tr>
     </thead>
     <tbody>
@@ -38,10 +38,10 @@
                     <td class="employeePhone">@employee.EmployeePhone</td>
                     <td class="employeeNote">@employee.EmployeeNote</td>
                     @{
-                        if (Session["User"]?.ToString() != null)
+                        if (isAuthorized)
                         {
                             <td>
-                                <button type="button" class="editEmployee btn btn-info small" data-toggle="modal" data-target="#editEmployeeModal">
+                                <button type="button" class="editEmployee btn btn-info small" data-toggle="modal" data-target="#employeeEditModal">
                                     <i class="fa fa-edit"></i>
                                 </button>
 
@@ -55,7 +55,7 @@
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="detailEmployee btn btn-info small" data-toggle="modal" data-target="#employeeDetailModal">
-                                    <i class="fas fa-info-circle"></i>
+                                    <i class="fa fa-info-circle"></i>
                                 </button>
                             </td>
                         }
@@ -66,174 +66,18 @@
         }
     </tbody>
 </table>
-
-<!-- Detail Modal -->
-<div class="modal fade" id="employeeDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Employee Detail</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name" class="col-form-label">Employee Name</label>
-                                <input disabled type="text" class="form-control" id="name">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="lastName" class="col-form-label">Last Name</label>
-                                <input disabled type="text" class="form-control" id="lastName">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="phone" class="col-form-label">Phone</label>
-                                <input disabled type="text" class="form-control" id="phone">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="department" class="col-form-label">Department</label>
-                                <input disabled type="text" class="form-control" id="department">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="note" class="col-form-label">Note</label>
-                        <textarea disabled class="form-control" id="note"></textarea>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Save changes</button>*@
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add/Edit Modal -->
-<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Employee Add/Edit</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form action="/PublicUI/Post" method="post">
-
-                    <div class="form-group" hidden>
-                        <input type="text" class="form-control" id="Id" name="Id">
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="EmployeeName" class="col-form-label">Employee Name(*)</label>
-                                <input required type="text" class="form-control" id="EmployeeName" name="EmployeeName" value="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="EmployeeLastName" class="col-form-label">Last Name(*)</label>
-                                <input required type="text" class="form-control" id="EmployeeLastName" name="EmployeeLastName" value="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="EmployeePhone" class="col-form-label">Phone (*)</label>
-                                <input required type="text" class="form-control" id="EmployeePhone" name="EmployeePhone" value="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dropdownMenu1" class="col-form-label">Department</label>
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Select...
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        @{
-                                            foreach (var item in DatabaseUtil.DepartmentService.GetList().Data)
-                                            {
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@item.DepartmentName</a></li>
-                                            }
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="dropdownMenu2" class="col-form-label">Employer</label>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Select...
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    @{
-                                        foreach (var item in DatabaseUtil.EmployeeService.GetList().Data)
-                                        {
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">@item.EmployeeFullName</a></li>
-                                        }
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="EmployeeNote" class="col-form-label">Note</label>
-                                <textarea class="form-control" name="EmployeeNote" id="EmployeeNote" value=""></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-
-            @* <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>*@
-        </div>
-    </div>
-</div>
-
+@{
+    if (isAuthorized)
+    {
+        <!-- Add/Edit Modal -->
+        @Html.Partial("Edit")
+    }
+    else
+    {
+        <!-- Detail Modal -->
+        @Html.Partial("Detail")
+    }
+}
 @section scripts{
     @Scripts.Render("~/bundles/employee")
 }
