@@ -1,4 +1,4 @@
-﻿namespace PhoneContact.DataAccess.Concrete
+﻿namespace PhoneContact.DataAccess.Concrete.DTO
 {
 	public class ResponseBase<T>
 	{
