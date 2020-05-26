@@ -1,52 +1,45 @@
-﻿#region 
+﻿#region
 
+using PhoneContact.Business.Abstract;
 using PhoneContact.Business.Concrete;
-using PhoneContact.Core.DataAccess.Base;
 using PhoneContact.DataAccess;
+using PhoneContact.DataAccess.Abstract;
+using PhoneContact.DataAccess.Repository;
 
 #endregion
 
 namespace PhoneContact.Business
 {
-	public class DatabaseUtil
-	{
-		#region Fields
+    public class DatabaseUtil
+    {
+        #region Fields
 
-		private static UnitOfWork _unitOfWork;
+        private static UnitOfWork _unitOfWork;
 
-		private static IEntityRepositoryBase<Entities.User> _userRepository;
-		private static UserService _userService;
+        private static IUserRepository _userRepository;
+        private static IUserService _userService;
 
-		private static IEntityRepositoryBase<Entities.Department> _departmentRepository;
-		private static DepartmentService _departmentService;
+        private static IDepartmentRepository _departmentRepository;
+        private static IDepartmentService _departmentService;
 
-		private static IEntityRepositoryBase<Entities.Employee> _employeeRepository;
-		private static EmployeeService _employeeService;
+        private static IEmployeeRepository _employeeRepository;
+        private static IEmployeeService _employeeService;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public static UnitOfWork UnitOfWork => _unitOfWork ?? (_unitOfWork = new UnitOfWork());
+        public static UnitOfWork UnitOfWork => _unitOfWork ?? (_unitOfWork = new UnitOfWork());
 
-		public static IEntityRepositoryBase<Entities.User> UserRepository
-			=> _userRepository ?? (_userRepository = UnitOfWork.GetRepository<Entities.User>());
+        public static IUserRepository UserRepository => _userRepository ?? (_userRepository = new UserRepository(UnitOfWork.Context));
+        public static IUserService UserService => _userService ?? (_userService = new UserService(UserRepository));
 
-		public static UserService UserService
-			=> _userService ?? (_userService = new UserService(UserRepository));
+        public static IDepartmentRepository DepartmentRepository => _departmentRepository ?? (_departmentRepository = new DepartmentRepository(UnitOfWork.Context));
+        public static IDepartmentService DepartmentService => _departmentService ?? (_departmentService = new DepartmentService(DepartmentRepository));
 
-		public static IEntityRepositoryBase<Entities.Department> DepartmentRepository
-			=> _departmentRepository ?? (_departmentRepository = UnitOfWork.GetRepository<Entities.Department>());
+        public static IEmployeeRepository EmployeeRepository => _employeeRepository ?? (_employeeRepository = new EmployeeRepository(UnitOfWork.Context));
+        public static IEmployeeService EmployeeService => _employeeService ?? (_employeeService = new EmployeeService(EmployeeRepository));
 
-		public static DepartmentService DepartmentService
-			=> _departmentService ?? (_departmentService = new DepartmentService(DepartmentRepository));
-
-		public static IEntityRepositoryBase<Entities.Employee> EmployeeRepository
-			=> _employeeRepository ?? (_employeeRepository = UnitOfWork.GetRepository<Entities.Employee>());
-
-		public static EmployeeService EmployeeService
-			=> _employeeService ?? (_employeeService = new EmployeeService(EmployeeRepository));
-
-		#endregion
-	}
+        #endregion
+    }
 }

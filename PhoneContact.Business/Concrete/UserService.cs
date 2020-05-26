@@ -1,12 +1,11 @@
 ﻿#region 
 
 using PhoneContact.Business.Abstract;
-using PhoneContact.Core.DataAccess.Base;
-using PhoneContact.DataAccess.Concrete;
 using PhoneContact.DataAccess.Concrete.DTO;
 using PhoneContact.DataAccess.Concrete.DTO.Extension;
 using System;
 using System.Collections.Generic;
+using PhoneContact.DataAccess.Abstract;
 
 #endregion
 
@@ -14,12 +13,12 @@ namespace PhoneContact.Business.Concrete
 {
 	public class UserService : IUserService
 	{
-		public UserService(IEntityRepositoryBase<Entities.User> repository)
+		public UserService(IUserRepository repository)
 		{
 			Repository = repository ?? throw new NullReferenceException($"Repository is null");
 		}
 
-		public IEntityRepositoryBase<Entities.User> Repository { get; set; }
+		public IUserRepository Repository { get; set; }
 
 		public ResponseBase<List<User>> GetList()
 		{

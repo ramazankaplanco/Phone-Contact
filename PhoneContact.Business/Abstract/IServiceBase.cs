@@ -1,7 +1,7 @@
 ﻿#region 
 
-using PhoneContact.DataAccess.Concrete;
 using System.Collections.Generic;
+using PhoneContact.DataAccess.Concrete.DTO;
 
 #endregion
 

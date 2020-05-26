@@ -1,75 +1,74 @@
 ﻿#region 
 
 using PhoneContact.Business.Abstract;
-using PhoneContact.Core.DataAccess.Base;
-using PhoneContact.DataAccess.Concrete;
 using PhoneContact.DataAccess.Concrete.DTO;
 using PhoneContact.DataAccess.Concrete.DTO.Extension;
 using System;
 using System.Collections.Generic;
+using PhoneContact.DataAccess.Abstract;
 
 #endregion
 
 namespace PhoneContact.Business.Concrete
 {
-	public class EmployeeService : IEmployeeService
-	{
-		public EmployeeService(IEntityRepositoryBase<Entities.Employee> repository)
-		{
-			Repository = repository ?? throw new NullReferenceException($"Repository is null");
-		}
+    public class EmployeeService : IEmployeeService
+    {
+        public EmployeeService(IEmployeeRepository repository)
+        {
+            Repository = repository ?? throw new NullReferenceException($"Repository is null");
+        }
 
-		public IEntityRepositoryBase<Entities.Employee> Repository { get; set; }
+        public IEmployeeRepository Repository { get; set; }
 
-		public ResponseBase<List<Employee>> GetList()
-		{
-			var model = Repository.GetList(p => !p.IsDeleted).ToDto();
+        public ResponseBase<List<Employee>> GetList()
+        {
+            var model = Repository.GetList(p => !p.IsDeleted).ToDto();
 
-			return new ResponseBase<List<Employee>>(model);
-		}
+            return new ResponseBase<List<Employee>>(model);
+        }
 
-		public ResponseBase<Employee> GetById(int id)
-		{
-			var model = Repository.Get(p => p.Id == id).ToDto();
+        public ResponseBase<Employee> GetById(int id)
+        {
+            var model = Repository.Get(p => p.Id == id).ToDto();
 
-			return new ResponseBase<Employee>(model);
-		}
+            return new ResponseBase<Employee>(model);
+        }
 
-		public ResponseBase<Employee> Add(Employee item)
-		{
-			var entity = item.ToEntity();
+        public ResponseBase<Employee> Add(Employee item)
+        {
+            var entity = item.ToEntity();
 
-			Repository.Add(entity);
+            Repository.Add(entity);
 
-			var save = Repository.Save();
+            var save = Repository.Save();
 
-			var model = entity.ToDto();
+            var model = entity.ToDto();
 
-			return new ResponseBase<Employee>(model) { Success = save };
-		}
+            return new ResponseBase<Employee>(model) { Success = save };
+        }
 
-		public ResponseBase<bool> UpdateById(int id, Employee item)
-		{
-			var entity = Repository.Get(p => p.Id == id);
+        public ResponseBase<bool> UpdateById(int id, Employee item)
+        {
+            var entity = Repository.Get(p => p.Id == id);
 
-			entity.ToUpdate(item);
+            entity.ToUpdate(item);
 
-			Repository.Update(entity);
+            Repository.Update(entity);
 
-			var update = Repository.Save();
+            var update = Repository.Save();
 
-			return new ResponseBase<bool>(update) { Success = update };
-		}
+            return new ResponseBase<bool>(update) { Success = update };
+        }
 
-		public ResponseBase<bool> DeleteById(int id)
-		{
-			var entity = Repository.Get(p => p.Id == id);
+        public ResponseBase<bool> DeleteById(int id)
+        {
+            var entity = Repository.Get(p => p.Id == id);
 
-			Repository.Delete(entity);
+            Repository.Delete(entity);
 
-			var delete = Repository.Save();
+            var delete = Repository.Save();
 
-			return new ResponseBase<bool>(delete) { Success = delete };
-		}
-	}
+            return new ResponseBase<bool>(delete) { Success = delete };
+        }
+    }
 }
