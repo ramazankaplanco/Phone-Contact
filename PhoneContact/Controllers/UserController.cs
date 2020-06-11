@@ -1,5 +1,8 @@
-﻿#region 
+﻿#region
 
+using System;
+using System.Collections.Generic;
+using System.Web.Helpers;
 using PhoneContact.Business;
 using PhoneContact.DataAccess.Concrete.DTO;
 using System.Web.Http;
@@ -18,12 +21,11 @@ namespace PhoneContact.Controllers
             if (session == null)
                 return RedirectToAction("Index", "PublicUI");
 
-            var users = DatabaseUtil.UserService.GetList().Data;
-
-            return View(users);
+            return View();
         }
 
         [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(string userNickName, string userPassword)
         {
             var user = DatabaseUtil.UserService.GetByNickname(userNickName, userPassword).Data;
@@ -40,15 +42,112 @@ namespace PhoneContact.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Post([FromBody]User user)
+        [System.Web.Mvc.HttpGet]
+        public JsonResult Get()
         {
-            if (user.Id > 0)
-                DatabaseUtil.UserService.UpdateById(user.Id, user);
-            else
-                DatabaseUtil.UserService.Add(user);
+            ResponseBase<List<User>> response;
 
-            return RedirectToAction("Index", "User");
+            try
+            {
+                response = DatabaseUtil.UserService.GetList();
+            }
+            catch (Exception e)
+            {
+                response = new ResponseBase<List<User>>(null)
+                {
+                    Message = e.ToString(),
+                    Success = false
+                };
+            }
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public JsonResult GetById(int id)
+        {
+            ResponseBase<User> response;
+
+            try
+            {
+                response = DatabaseUtil.UserService.GetById(id);
+            }
+            catch (Exception e)
+            {
+                response = new ResponseBase<User>(null)
+                {
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        //[ValidateAntiForgeryToken]
+        public JsonResult Post([FromBody] User user)
+        {
+            ResponseBase<User> response;
+
+            try
+            {
+                response = DatabaseUtil.UserService.Add(user);
+            }
+            catch (Exception e)
+            {
+                response = new ResponseBase<User>(null)
+                {
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Mvc.HttpPut]
+        //[ValidateAntiForgeryToken]
+        public JsonResult Put(int id, [FromBody] User user)
+        {
+            ResponseBase<bool> response;
+
+            try
+            {
+                response = DatabaseUtil.UserService.UpdateById(id, user);
+            }
+            catch (Exception e)
+            {
+                response = new ResponseBase<bool>(false)
+                {
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Mvc.HttpDelete]
+        //[ValidateAntiForgeryToken]
+        public JsonResult Delete(int id)
+        {
+            ResponseBase<bool> response;
+
+            try
+            {
+                response = DatabaseUtil.UserService.DeleteById(id);
+            }
+            catch (Exception e)
+            {
+                response = new ResponseBase<bool>(false)
+                {
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }
