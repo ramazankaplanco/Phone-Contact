@@ -7,58 +7,60 @@ using System.Linq;
 
 namespace PhoneContact.DataAccess.Concrete.DTO.Extension
 {
-	public static class EmployeeExtension
-	{
-		public static Employee ToDto(this Entities.Employee employee)
-		{
-			if (employee == null)
-				return null;
+    public static class EmployeeExtension
+    {
+        public static Employee ToDto(this Entities.Employee employee)
+        {
+            if (employee == null)
+                return null;
 
-			return new Employee
-			{
-				Id = employee.Id,
-				EmployeeName = employee.Name,
-				EmployeeLastName = employee.LastName,
-				EmployeeFullName = employee.FullName,
-				EmployeePhone = employee.Phone,
-				DepartmentId = employee.DepartmentId,
-				EmployerId = employee.EmployerId,
-				EmployeeNote = employee.Note
-			};
-		}
+            return new Employee
+            {
+                Id = employee.Id,
+                EmployeeName = employee.Name,
+                EmployeeLastName = employee.LastName,
+                EmployeeFullName = employee.FullName,
+                EmployeePhone = employee.Phone,
+                DepartmentId = employee.DepartmentId,
+                DepartmentName = employee.Department != null ? employee.Department.Name : string.Empty,
+                EmployerId = employee.EmployerId,
+                EmployerFullName = employee.Employer != null ? employee.Employer.FullName : string.Empty,
+                EmployeeNote = employee.Note
+            };
+        }
 
-		public static List<Employee> ToDto(this IEnumerable<Entities.Employee> employees)
-		{
-			return employees.Select(ToDto).ToList();
-		}
+        public static List<Employee> ToDto(this IEnumerable<Entities.Employee> employees)
+        {
+            return employees.Select(ToDto).ToList();
+        }
 
-		public static void ToUpdate(this Entities.Employee employee, Employee item)
-		{
-			if (employee == null)
-				return;
+        public static void ToUpdate(this Entities.Employee employee, Employee item)
+        {
+            if (employee == null)
+                return;
 
-			employee.Name = item.EmployeeName;
-			employee.LastName = item.EmployeeLastName;
-			employee.Phone = item.EmployeePhone;
-			employee.DepartmentId = item.DepartmentId;
-			employee.EmployerId = item.EmployerId;
-			employee.Note = item.EmployeeNote;
-		}
+            employee.Name = item.EmployeeName;
+            employee.LastName = item.EmployeeLastName;
+            employee.Phone = item.EmployeePhone;
+            employee.DepartmentId = item.DepartmentId;
+            employee.EmployerId = item.EmployerId;
+            employee.Note = item.EmployeeNote;
+        }
 
-		public static Entities.Employee ToEntity(this Employee employee)
-		{
-			if (employee == null)
-				return null;
+        public static Entities.Employee ToEntity(this Employee employee)
+        {
+            if (employee == null)
+                return null;
 
-			return new Entities.Employee
-			{
-				Name = employee.EmployeeName,
-				LastName = employee.EmployeeLastName,
-				Phone = employee.EmployeePhone,
-				DepartmentId = employee.DepartmentId,
-				EmployerId = employee.EmployerId,
-				Note = employee.EmployeeNote
-			};
-		}
-	}
+            return new Entities.Employee
+            {
+                Name = employee.EmployeeName,
+                LastName = employee.EmployeeLastName,
+                Phone = employee.EmployeePhone,
+                DepartmentId = employee.DepartmentId,
+                EmployerId = employee.EmployerId,
+                Note = employee.EmployeeNote
+            };
+        }
+    }
 }

@@ -29,16 +29,16 @@ namespace PhoneContact.Business
 
         #region Properties
 
-        public static UnitOfWork UnitOfWork => _unitOfWork ?? (_unitOfWork = new UnitOfWork());
+        public static UnitOfWork UnitOfWork => _unitOfWork = _unitOfWork ?? new UnitOfWork();
 
-        public static IUserRepository UserRepository => _userRepository ?? (_userRepository = new UserRepository(UnitOfWork.Context));
-        public static IUserService UserService => _userService ?? (_userService = new UserService(UserRepository));
+        public static IUserRepository UserRepository => _userRepository = _userRepository ?? new UserRepository(UnitOfWork.Context);
+        public static IUserService UserService => _userService = _userService ?? new UserService(UserRepository);
 
-        public static IDepartmentRepository DepartmentRepository => _departmentRepository ?? (_departmentRepository = new DepartmentRepository(UnitOfWork.Context));
-        public static IDepartmentService DepartmentService => _departmentService ?? (_departmentService = new DepartmentService(DepartmentRepository));
+        public static IDepartmentRepository DepartmentRepository => _departmentRepository = _departmentRepository ?? new DepartmentRepository(UnitOfWork.Context);
+        public static IDepartmentService DepartmentService => _departmentService = _departmentService ?? new DepartmentService(DepartmentRepository);
 
-        public static IEmployeeRepository EmployeeRepository => _employeeRepository ?? (_employeeRepository = new EmployeeRepository(UnitOfWork.Context));
-        public static IEmployeeService EmployeeService => _employeeService ?? (_employeeService = new EmployeeService(EmployeeRepository));
+        public static IEmployeeRepository EmployeeRepository => _employeeRepository = _employeeRepository ?? new EmployeeRepository(UnitOfWork.Context);
+        public static IEmployeeService EmployeeService => _employeeService = _employeeService ?? new EmployeeService(EmployeeRepository);
 
         #endregion
     }

@@ -22,7 +22,7 @@ namespace PhoneContact.Business.Concrete
 
         public ResponseBase<List<Employee>> GetList()
         {
-            var model = Repository.GetList(p => !p.IsDeleted).ToDto();
+            var model = Repository.GetList(p => !p.IsDeleted, p => p.Employer, p => p.Department).ToDto();
 
             return new ResponseBase<List<Employee>>(model);
         }
