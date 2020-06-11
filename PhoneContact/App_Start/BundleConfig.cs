@@ -12,7 +12,8 @@ namespace PhoneContact
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.validate.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
                         "~/Scripts/umd/popper.js"));
@@ -26,18 +27,24 @@ namespace PhoneContact
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/employee").Include(
-                "~/Scripts/customScript/employee.js"));
+                                "~/Scripts/custom/baseHelper.js",
+                                "~/Scripts/custom/baseRequest.js",
+                                "~/Scripts/custom/employee.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/user").Include(
-                "~/Scripts/customScript/user.js"));
+                                "~/Scripts/custom/baseHelper.js",
+                                "~/Scripts/custom/baseRequest.js",
+                                "~/Scripts/custom/user.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/department").Include(
-                      "~/Scripts/customScript/department.js"));
+                                "~/Scripts/custom/baseHelper.js",
+                                "~/Scripts/custom/baseRequest.js",
+                                "~/Scripts/custom/department.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/font-awesome.css",
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                                "~/Content/font-awesome.css",
+                                "~/Content/bootstrap.css",
+                                "~/Content/site.css"));
 
 #if !DEBUG
             BundleTable.EnableOptimizations = true;
