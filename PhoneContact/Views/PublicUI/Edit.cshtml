@@ -11,7 +11,8 @@
             </div>
 
             <div class="modal-body">
-                <form id="employeeFrom" action="/PublicUI/Post" method="post">
+                <form id="employeeForm" role="form">
+                    @Html.AntiForgeryToken()
                     <div class="form-group" hidden>
                         <input type="text" class="form-control" id="Id" name="Id">
                     </div>
@@ -20,14 +21,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="EmployeeName" class="col-form-label">Employee Name<span class="text-danger"> *</span></label>
-                                <input required type="text" class="form-control" id="EmployeeName" name="EmployeeName" maxlength="64">
+                                <input type="text" class="form-control" id="EmployeeName" name="EmployeeName" maxlength="64">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="EmployeeLastName" class="col-form-label">Last Name<span class="text-danger"> *</span></label>
-                                <input required type="text" class="form-control" id="EmployeeLastName" name="EmployeeLastName" maxlength="64">
+                                <input type="text" class="form-control" id="EmployeeLastName" name="EmployeeLastName" maxlength="64">
                             </div>
                         </div>
                     </div>
@@ -36,7 +37,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="EmployeePhone" class="col-form-label">Phone <span class="text-danger"> *</span></label>
-                                <input required type="text" class="form-control" id="EmployeePhone" name="EmployeePhone" maxlength="32">
+                                <input type="text" class="form-control" id="EmployeePhone" name="EmployeePhone" maxlength="32">
                             </div>
                         </div>
 
@@ -82,7 +83,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="employeeFrom">Save</button>
+                <button type="button" class="btn btn-primary" id="saveChanges" form="employeeForm">Save</button>
             </div>
         </div>
     </div>

@@ -10,7 +10,8 @@
             </div>
 
             <div class="modal-body">
-                <form id="userForm" action="/User/Post" method="post" role="form">
+                <form id="userForm" role="form">
+                    @Html.AntiForgeryToken()
                     <div class="form-group" hidden>
                         <input type="text" class="form-control" id="Id" name="Id">
                     </div>
@@ -44,7 +45,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="userForm">Save</button>
+                <button type="button" class="btn btn-primary" id="saveChanges" form="userForm">Save</button>
             </div>
         </div>
     </div>

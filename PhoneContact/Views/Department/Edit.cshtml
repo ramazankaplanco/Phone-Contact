@@ -11,7 +11,8 @@
             </div>
 
             <div class="modal-body">
-                <form id="departmentForm" action="/Department/Post" method="post" role="form">
+                <form id="departmentForm" role="form">
+                    @Html.AntiForgeryToken()
                     <div class="form-group" hidden>
                         <input type="text" class="form-control" id="Id" name="Id">
                     </div>
@@ -22,7 +23,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="DepartmentCode" class="row-form-label">Department Code<span class="text-danger"> *</span></label>
+                        <label for="DepartmentCode" class="col-form-label">Department Code<span class="text-danger"> *</span></label>
                         <input type="text" required class="form-control" id="DepartmentCode" name="DepartmentCode" maxlength="32">
                     </div>
 
@@ -35,7 +36,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="departmentForm">Save</button>
+                <button type="button" class="btn btn-primary" id="saveChanges" form="departmentForm">Save</button>
             </div>
         </div>
     </div>

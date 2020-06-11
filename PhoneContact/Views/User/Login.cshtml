@@ -14,6 +14,7 @@
 
                     <div class="modal-body">
                         <form id="loginForm" action="/User/Login" method="post" role="form">
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label for="userNickName" class="col-form-label">Nick Name<span class="text-danger"> *</span></label>
                                 <input type="text" required class="form-control" id="userNickName" name="userNickName" maxlength="64">

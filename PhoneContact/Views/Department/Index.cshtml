@@ -1,5 +1,4 @@
-﻿@model List<PhoneContact.DataAccess.Concrete.DTO.Department>
-@{
+﻿@{
     ViewBag.Title = "Admin UI";
 }
 <!-- Data Table -->
@@ -12,33 +11,13 @@
             <th scope="col">Department Code</th>
             <th scope="col">Note</th>
             <th scope="col">
-                <button type="button" class="newDepartment btn btn-primary small" data-toggle="modal" data-target="#departmentEditModal">
+                <button type="button" class="newDepartment btn btn-primary small" data-toggle="modal">
                     <i class="fa fa-plus"></i>
                 </button>
             </th>
         </tr>
     </thead>
     <tbody>
-        @{
-            foreach (var department in Model)
-            {
-                <tr>
-                    <td class="departmentId">@department.Id</td>
-                    <td class="departmentName">@department.DepartmentName</td>
-                    <td class="departmentCode">@department.DepartmentCode</td>
-                    <td class="departmentNote">@department.DepartmentNote</td>
-                    <td>
-                        <button type="button" class="editDepartment btn btn-info small" data-toggle="modal" data-target="#departmentEditModal">
-                            <i class="fa fa-edit"></i>
-                        </button>
-
-                        <button type="button" class="deleteDepartment btn btn-danger small">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            }
-        }
     </tbody>
 </table>
 

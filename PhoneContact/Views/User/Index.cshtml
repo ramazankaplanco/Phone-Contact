@@ -1,5 +1,4 @@
-﻿@model List<PhoneContact.DataAccess.Concrete.DTO.User>
-@{
+﻿@{
     ViewBag.Title = "Admin UI";
 }
 <!-- Data Table -->
@@ -11,27 +10,11 @@
             <th scope="col">User Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Nick Name</th>
+            <th scope="col">Note</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        @{
-            foreach (var user in Model)
-            {
-                <tr>
-                    <td class="userId">@user.Id</td>
-                    <td class="userName">@user.UserName</td>
-                    <td class="userLastName">@user.UserLastName</td>
-                    <td class="userNickName">@user.UserNickName</td>
-                    <td class="userPassword" hidden>@user.UserPassword</td>
-                    <td class="userNote">@user.UserNote</td>
-                    <td>
-                        <button type="button" class="editUser btn btn-primary" data-toggle="modal" data-target="#userEditModal">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-            }
-        }
     </tbody>
 </table>
 
