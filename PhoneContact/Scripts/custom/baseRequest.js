@@ -1,7 +1,7 @@
 ﻿function baseRequest(url, data, type, dataType, callback) {
     $.ajax({
         headers: {
-            'anti-forgery-token': $('input[name="__RequestVerificationToken"]').val()
+            //'__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
         url: url,
         type: type,

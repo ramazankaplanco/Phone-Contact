@@ -6,68 +6,84 @@ using System;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 #endregion
 
 namespace PhoneContact.DataAccess.Context
 {
-	public class DataContext : DbContext
-	{
-		public DataContext() : base(@"PhoneContact")
-		{
-			Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, DataContextMigrationConfiguration>());
-		}
+    public class DataContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
+    {
+        public DataContext() : base(@"PhoneContact")
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, DataContextMigrationConfiguration>());
+        }
 
-		public DbSet<User> Users { get; set; }
-		public DbSet<Employee> Employees { get; set; }
-		public DbSet<Department> Departments { get; set; }
+        public static DataContext Create()
+        {
+            return new DataContext();
+        }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
-		}
+        public override IDbSet<User> Users { get; set; }
+        public override IDbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<UserLogin> UserLogins { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
-		public override int SaveChanges()
-		{
-			var entries = ChangeTracker.Entries<EntityBase>()
-				.Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted).ToArray();
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-			foreach (var entry in entries)
-			{
-				var entity = entry.Entity;
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<UserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaims");
+        }
 
-				switch (entry.State)
-				{
-					case EntityState.Detached:
-					case EntityState.Unchanged:
-						throw new Exception(nameof(entry.State));
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries<EntityBase>()
+                .Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted).ToArray();
 
-					case EntityState.Added:
-						break;
-					case EntityState.Modified:
-						break;
-					case EntityState.Deleted:
-						{
-							entity.IsDeleted = true;
-							entry.State = EntityState.Modified;
-						}
-						break;
-					default:
-						throw new ArgumentOutOfRangeException(nameof(entry.State));
-				}
-			}
-			try
-			{
-				var result = base.SaveChanges();
+            foreach (var entry in entries)
+            {
+                var entity = entry.Entity;
 
-				return result;
-			}
-			catch (Exception e)
-			{
-				Trace.TraceError(e.ToString());
+                switch (entry.State)
+                {
+                    case EntityState.Detached:
+                    case EntityState.Unchanged:
+                        throw new Exception(nameof(entry.State));
 
-				throw;
-			}
-		}
-	}
+                    case EntityState.Added:
+                        break;
+                    case EntityState.Modified:
+                        break;
+                    case EntityState.Deleted:
+                        {
+                            entity.IsDeleted = true;
+                            entry.State = EntityState.Modified;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(entry.State));
+                }
+            }
+            try
+            {
+                var result = base.SaveChanges();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
+
+                throw;
+            }
+        }
+    }
 }

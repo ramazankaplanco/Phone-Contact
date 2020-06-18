@@ -7,8 +7,8 @@ using PhoneContact.DataAccess.Concrete.DTO;
 
 namespace PhoneContact.Business.Abstract
 {
-	public interface IUserService : IServiceBase<User>
-	{
-		ResponseBase<User> GetByNickname(string nickName, string password);
-	}
+    public interface IUserService : IServiceBase<User>
+    {
+        ResponseBase<User> GetByUsername(string userName);
+    }
 }

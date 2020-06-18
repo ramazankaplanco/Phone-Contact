@@ -13,7 +13,6 @@ using AllowAnonymousAttribute = System.Web.Http.AllowAnonymousAttribute;
 
 namespace PhoneContact.Controllers
 {
-    [AllowAnonymous]
     public class PublicUIController : Controller
     {
         public ActionResult Index()
@@ -21,6 +20,7 @@ namespace PhoneContact.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [System.Web.Mvc.HttpGet]
         public JsonResult Get()
         {
@@ -42,6 +42,7 @@ namespace PhoneContact.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         [System.Web.Mvc.HttpGet]
         public JsonResult GetById(int id)
         {
@@ -63,6 +64,7 @@ namespace PhoneContact.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        [System.Web.Mvc.Authorize]
         [System.Web.Mvc.HttpPost]
         //[ValidateAntiForgeryToken]
         public JsonResult Post([FromBody] Employee employee)
@@ -88,6 +90,7 @@ namespace PhoneContact.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        [System.Web.Mvc.Authorize]
         [System.Web.Mvc.HttpPut]
         //[ValidateAntiForgeryToken]
         public JsonResult Put(int id, [FromBody] Employee employee)
@@ -110,6 +113,7 @@ namespace PhoneContact.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        [System.Web.Mvc.Authorize]
         [System.Web.Mvc.HttpDelete]
         //[ValidateAntiForgeryToken]
         public JsonResult Delete(int id)

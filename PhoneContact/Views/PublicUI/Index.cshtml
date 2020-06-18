@@ -1,9 +1,9 @@
-﻿@{ var isAuthorized = Session["User"]?.ToString() != null;}
+﻿@{ var isAuthorized = User.Identity.IsAuthenticated;}
 @{
     ViewBag.Title = "Public UI";
 }
 <!-- Data Table -->
-<input type="hidden" id="authorized" data-authorized="@isAuthorized"/>
+<input type="hidden" id="authorized" data-authorized="@isAuthorized" />
 <table class="table table-striped table-hover table-responsive-lg border" id="employeeTable" style="margin-top: 2%">
     <caption>
         <strong>Employee List</strong>

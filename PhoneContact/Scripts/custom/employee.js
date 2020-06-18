@@ -26,9 +26,6 @@ $(document).on("click", "#employeeTable button.editEmployee", function () {
     $("#EmployeeLastName").val(lastName);
     $("#EmployeePhone").val(phone);
     $("#EmployeeNote").val(note);
-
-    //$("#submitForm").attr("method", "post");
-    //$("#submitForm").attr("action", "/PublicUI/Post");
 });
 
 $(document).on("click", "#employeeTable button.newEmployee", function () {
@@ -81,6 +78,21 @@ $("#saveChanges").click(function () {
     }
 });
 
+$("#getToken").click(function () {
+
+    let token = $("#loginForm").serializeObject();
+
+    request("/Token", token, "POST").done(function (result, data) {
+        if (result && data.access_token) {
+
+            $("#employeeEditModal").modal("hide");
+
+            window.location.reload();
+
+        } else alert(data.responseJSON.error_description);
+    });
+});
+
 function postPublicUI(employee) {
     request("/PublicUI/Post", employee, "POST").done(function (result, data) {
         if (result && data.Success) {
@@ -131,9 +143,9 @@ function getPublicUI() {
                     '<td class="employerFullName">' + employee.EmployerFullName + '</td>' +
                     '<td class="employeeName">' + employee.EmployeeName + '</td>' +
                     '<td class="employeeLastName">' + employee.EmployeeLastName + '</td>' +
-                    '<td class="employeePhone">' + employee.EmployeePhone + '</td>' +
                     '<td class="departmentId" hidden>' + employee.DepartmentId + '</td>' +
                     '<td class="departmentName">' + employee.DepartmentName + '</td>' +
+                    '<td class="employeePhone">' + employee.EmployeePhone + '</td>' +
                     '<td class="employeeNote">' + employee.EmployeeNote + '</td>';
                 body += isAuthorized
                     ?

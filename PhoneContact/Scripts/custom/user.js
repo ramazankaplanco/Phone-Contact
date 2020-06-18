@@ -8,19 +8,30 @@ $(document).on("click", "#userTable button.editUser", function () {
     let tr = $(this).closest('tr');
 
     let id = tr.find('.userId').text();
-    let name = tr.find('.userName').text();
+    let userName = tr.find('.userName').text();
+    let firstName = tr.find('.userFirstName').text();
     let lastName = tr.find('.userLastName').text();
-    let nickName = tr.find('.userNickName').text();
-    let password = tr.find('.userPassword').text();
+    let phoneNumber = tr.find('.userPhoneNumber').text();
     let note = tr.find('.userNote').text();
 
 
     $("#Id").val(id);
-    $("#UserName").val(name);
+    $("#UserName").val(userName);
+    $("#UserFirstName").val(firstName);
     $("#UserLastName").val(lastName);
-    $("#UserNickName").val(nickName);
-    $("#UserPassword").val(password);
+    $("#UserPhoneNumber").val(phoneNumber);
     $("#UserNote").val(note);
+});
+
+$("#newUser").click(function () {
+
+    $("#userEditModal").modal("show");
+
+    setTimeout(function () {
+        $("#Id").val('');
+
+        clearForm($("#userForm"));
+    }, 500);
 });
 
 $("#saveChanges").click(function () {
@@ -29,7 +40,9 @@ $("#saveChanges").click(function () {
 
         let user = $("#userForm").serializeObject();
 
-        parseInt(user.Id) > 0 ? postUser(user) : putUser(user);
+        user.UserEmail = user.UserName;
+
+        parseInt(user.Id) > 0 ? putUser(user) : postUser(user);
     }
 });
 
@@ -70,12 +83,24 @@ function getUser() {
             data.Data.forEach(function (user) {
                 body +=
                     '<tr>' +
-                    '<td class="userId">' + user.Id + '</td>' +
-                    '<td class="userName">' + user.UserName + '</td>' +
-                    '<td class="userLastName">' + user.UserLastName + '</td>' +
-                    '<td class="userNickName">' + user.UserNickName + '</td>' +
-                    '<td class="userPassword" hidden>' + user.UserPassword + '</td>' +
-                    '<td class="userNote">' + user.UserNote + '</td>' +
+                    '<td class="userId">' +
+                    user.Id +
+                    '</td>' +
+                    '<td class="userName">' +
+                    user.UserName +
+                    '</td>' +
+                    '<td class="userFirstName">' +
+                    user.UserFirstName +
+                    '</td>' +
+                    '<td class="userLastName">' +
+                    user.UserLastName +
+                    '</td>' +
+                    '<td class="userPhoneNumber">' +
+                    user.UserPhoneNumber +
+                    '</td>' +
+                    '<td class="userNote">' +
+                    user.UserNote +
+                    '</td>' +
                     '<td>' +
                     '<button type="button" class="editUser btn btn-primary" data-toggle="modal" data-target="#userEditModal">' +
                     '<i class="fa fa-edit"></i>' +

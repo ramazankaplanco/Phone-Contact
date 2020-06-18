@@ -9,7 +9,7 @@
 
         <div class="navbar-collapse collapse">
             @{
-                if (Session["User"] != null)
+                if (User.Identity.IsAuthenticated)
                 {
                     <ul class="nav nav-item">
                         <li>@Html.ActionLink("Departments", "Index", "Department", new { area = "" }, new { @class = "nav-link" })</li>

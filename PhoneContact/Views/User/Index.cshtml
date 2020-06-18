@@ -2,16 +2,21 @@
     ViewBag.Title = "Admin UI";
 }
 <!-- Data Table -->
-<table id="userTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top:2%">
+<table id="userTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top: 2%">
     <caption><strong>User List</strong></caption>
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">User Name</th>
+            <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
-            <th scope="col">Nick Name</th>
+            <th scope="col">Phone Number</th>
             <th scope="col">Note</th>
-            <th scope="col">Action</th>
+            <th scope="col">
+                <button type="button" id="newUser" class="btn btn-primary small" data-toggle="modal">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </th>
         </tr>
     </thead>
     <tbody>

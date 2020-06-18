@@ -21,10 +21,12 @@ namespace PhoneContact.DataAccess.Context
             if (!context.Users.Any())
                 context.Users.AddOrUpdate(new User
                 {
-                    Name = "System",
+                    FirstName = "System",
                     LastName = "Admin",
-                    NickName = "admin",
-                    Password = "admin"
+                    UserName = "admin@admin.com",
+                    Email = "admin@admin.com",
+                    PasswordHash = "AJti4fwF8EyR3eHeB+7gGtV0MaoiV8/s++CLy0hnZcL2cSg/wU061Q9oxXBJO1RFRg==",
+                    SecurityStamp = "61c9ab25-a352-42a0-876f-2e26269c25b1"
                 });
 
             base.Seed(context);

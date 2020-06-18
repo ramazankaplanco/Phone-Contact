@@ -2,44 +2,44 @@
 
 using System;
 using System.Collections.Generic;
-using System.Web.Helpers;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using PhoneContact.Business;
 using PhoneContact.DataAccess.Concrete.DTO;
 using System.Web.Http;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using PhoneContact.DataAccess.Concrete.DTO.Extension;
 
 #endregion
 
 namespace PhoneContact.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class UserController : Controller
     {
-        public ActionResult Index()
+        private ApplicationUserManager _userManager;
+
+        public UserController()
         {
-            var session = Session["User"]?.ToString();
 
-            if (session == null)
-                return RedirectToAction("Index", "PublicUI");
-
-            return View();
         }
 
-        [System.Web.Mvc.HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string userNickName, string userPassword)
+        public UserController(ApplicationUserManager userManager)
         {
-            var user = DatabaseUtil.UserService.GetByNickname(userNickName, userPassword).Data;
+            _userManager = userManager;
+        }
 
-            if (user == null)
-            {
-                Session["User"] = null;
+        public ApplicationUserManager UserManager
+        {
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
+        }
 
-                return RedirectToAction("Index", "PublicUI");
-            }
-
-            Session["User"] = userNickName;
-
-            return RedirectToAction("Index", "User");
+        public ActionResult Index()
+        {
+            return View();
         }
 
         [System.Web.Mvc.HttpGet]
@@ -86,13 +86,18 @@ namespace PhoneContact.Controllers
 
         [System.Web.Mvc.HttpPost]
         //[ValidateAntiForgeryToken]
-        public JsonResult Post([FromBody] User user)
+        public async Task<JsonResult> Post([FromBody] User user)
         {
             ResponseBase<User> response;
 
             try
             {
-                response = DatabaseUtil.UserService.Add(user);
+                var result = await UserManager.CreateAsync(user: user.ToEntity(), user.UserPassword);
+
+                if (!result.Succeeded)
+                    throw new ArgumentException(result.Errors.ToString());
+
+                response = new ResponseBase<User>(user);
             }
             catch (Exception e)
             {
@@ -108,13 +113,33 @@ namespace PhoneContact.Controllers
 
         [System.Web.Mvc.HttpPut]
         //[ValidateAntiForgeryToken]
-        public JsonResult Put(int id, [FromBody] User user)
+        public async Task<JsonResult> Put(int id, [FromBody] User user)
         {
             ResponseBase<bool> response;
 
             try
             {
-                response = DatabaseUtil.UserService.UpdateById(id, user);
+                var isEmailExist = DatabaseUtil.UnitOfWork.Context.Users.Any(p => p.Id != id && p.Email == user.UserName);
+
+                if (isEmailExist)
+                    throw new ArgumentException($"{user.UserName} is exist!");
+
+                var currentUser = await UserManager.FindByIdAsync(id);
+
+                currentUser.UserName = user.UserEmail;
+                currentUser.Email = user.UserEmail;
+                currentUser.FirstName = user.UserFirstName;
+                currentUser.LastName = user.UserLastName;
+                currentUser.PhoneNumber = user.UserPhoneNumber;
+                currentUser.Note = user.UserNote;
+                currentUser.PasswordHash = UserManager.PasswordHasher.HashPassword(user.UserPassword);
+
+                var result = await UserManager.UpdateAsync(currentUser);
+
+                if (!result.Succeeded)
+                    throw new ArgumentException(result.Errors.ToString());
+
+                response = new ResponseBase<bool>(result.Succeeded);
             }
             catch (Exception e)
             {

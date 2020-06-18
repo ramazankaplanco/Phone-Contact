@@ -12,15 +12,11 @@ using System.Web.Mvc;
 
 namespace PhoneContact.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class DepartmentController : Controller
     {
         public ActionResult Index()
         {
-            var session = Session["User"]?.ToString();
-
-            if (session == null)
-                return RedirectToAction("Index", "PublicUI");
-
             return View();
         }
 
