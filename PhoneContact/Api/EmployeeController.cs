@@ -18,6 +18,7 @@ using PhoneContact.DataAccess.Repository;
 namespace PhoneContact.Api
 {
     // "api/[controller]"
+    [Authorize]
     public class EmployeeController : ApiController
     {
         #region Fields
