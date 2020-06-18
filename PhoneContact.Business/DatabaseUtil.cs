@@ -16,6 +16,9 @@ namespace PhoneContact.Business
 
         private static UnitOfWork _unitOfWork;
 
+        private static UserStore _userStore;
+        private static RoleStore _roleStore;
+
         private static IUserRepository _userRepository;
         private static IUserService _userService;
 
@@ -30,6 +33,9 @@ namespace PhoneContact.Business
         #region Properties
 
         public static UnitOfWork UnitOfWork => _unitOfWork = _unitOfWork ?? new UnitOfWork();
+
+        public static UserStore UserStore => _userStore = _userStore ?? new UserStore(UnitOfWork.Context);
+        public static RoleStore RoleStore => _roleStore = _roleStore ?? new RoleStore(UnitOfWork.Context);
 
         public static IUserRepository UserRepository => _userRepository = _userRepository ?? new UserRepository(UnitOfWork.Context);
         public static IUserService UserService => _userService = _userService ?? new UserService(UserRepository);
