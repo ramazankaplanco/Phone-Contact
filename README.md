@@ -73,7 +73,9 @@ Asp.Net MVC 5 with 3 Layer Architecture Design
    
    * method: `GET` 
    
+   
    * header parameters:
+      
       
       
        ` 
@@ -82,7 +84,9 @@ Asp.Net MVC 5 with 3 Layer Architecture Design
        `
    
    
+   
    * response:
+      
       
       
        `
