@@ -77,10 +77,8 @@ Asp.Net MVC 5 with 3 Layer Architecture Design
       
       
        ` 
-       
            Accept:application/json
            Authorization:bearer jFKHBA1fcwUSVDrLuFfvVlgRFLYJpS4Jf-XpEzNj_hXd8SVYr87tLhgXU1DF80sYunvb-p9h-ZDCiOvF9w_UulehHFh_CUtlDTnf1d4TM5KZ5Xh-mi9r2TZhPv6myyzFZ59K5Z0JBN_ciWQJm_faM9sGO14NXIcV_b_rbBjF0U1j4YDToKS-d6Um6gCDZ_XoOuWy7eA5rBZct2BeuA8j42qVfZhjD0UndiQAWTsscvU
-           
        `
    
    
@@ -88,7 +86,6 @@ Asp.Net MVC 5 with 3 Layer Architecture Design
     
       
        `
-       
            {
                "message": null,
                "success": true,
@@ -109,5 +106,4 @@ Asp.Net MVC 5 with 3 Layer Architecture Design
                    }
                ]
            }
-           
        `

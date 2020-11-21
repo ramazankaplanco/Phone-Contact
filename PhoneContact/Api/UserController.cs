@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using PhoneContact.Business.Abstract;
 using PhoneContact.Business.Concrete;
 using PhoneContact.DataAccess;
 using PhoneContact.DataAccess.Abstract;
@@ -23,16 +24,18 @@ namespace PhoneContact.Api
         #region Fields
 
         private UnitOfWork _unitOfWork;
+
         private IUserRepository _userRepository;
-        private UserService _userService;
+        private IUserService _userService;
 
         #endregion
 
         #region Properties
 
         public UnitOfWork UnitOfWork => _unitOfWork ?? (_unitOfWork = new UnitOfWork());
+
         public IUserRepository UserRepository => _userRepository ?? (_userRepository = new UserRepository(UnitOfWork.Context));
-        public UserService UserService => _userService ?? (_userService = new UserService(UserRepository));
+        public IUserService UserService => _userService ?? (_userService = new UserService(UserRepository));
 
         #endregion
 

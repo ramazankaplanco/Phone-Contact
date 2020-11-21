@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region 
+
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -6,6 +8,8 @@ using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+
+#endregion
 
 namespace PhoneContact.Providers
 {

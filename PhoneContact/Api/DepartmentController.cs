@@ -33,6 +33,7 @@ namespace PhoneContact.Api
         #region Properties
 
         public UnitOfWork UnitOfWork => _unitOfWork ?? (_unitOfWork = new UnitOfWork());
+
         public IDepartmentRepository DepartmentRepository => _departmentRepository = _departmentRepository ?? new DepartmentRepository(UnitOfWork.Context);
         public IDepartmentService DepartmentService => _departmentService = _departmentService ?? new DepartmentService(DepartmentRepository);
 
