@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿#region 
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PhoneContact.Core.DataAccess.Base;
+
+#endregion
 
 namespace PhoneContact.Entities
 {
-    public class UserRole : IdentityUserRole<int>
+    public class UserRole : IdentityUserRole<int>, IEntityBase
     {
         public override int UserId { get; set; }
 
