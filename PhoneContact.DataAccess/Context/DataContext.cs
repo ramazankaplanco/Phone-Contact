@@ -45,35 +45,36 @@ namespace PhoneContact.DataAccess.Context
 
         public override int SaveChanges()
         {
-            var entries = ChangeTracker.Entries<EntityBase>()
-                .Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted).ToArray();
-
-            foreach (var entry in entries)
+            try
             {
-                var entity = entry.Entity;
+                var entries = ChangeTracker.Entries<EntityBase>()
+                    .Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted).ToArray();
 
-                switch (entry.State)
+                foreach (var entry in entries)
                 {
-                    case EntityState.Detached:
-                    case EntityState.Unchanged:
-                        throw new Exception(nameof(entry.State));
+                    var entity = entry.Entity;
 
-                    case EntityState.Added:
-                        break;
-                    case EntityState.Modified:
-                        break;
-                    case EntityState.Deleted:
+                    switch (entry.State)
+                    {
+                        case EntityState.Detached:
+                        case EntityState.Unchanged:
+                            throw new Exception(nameof(entry.State));
+
+                        case EntityState.Added:
+                            break;
+                        case EntityState.Modified:
+                            break;
+                        case EntityState.Deleted:
                         {
                             entity.IsDeleted = true;
                             entry.State = EntityState.Modified;
                         }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(entry.State));
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(entry.State));
+                    }
                 }
-            }
-            try
-            {
+
                 var result = base.SaveChanges();
 
                 return result;

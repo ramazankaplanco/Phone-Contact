@@ -37,13 +37,13 @@ namespace PhoneContact.Business
         public static UserStore UserStore => _userStore = _userStore ?? new UserStore(UnitOfWork.Context);
         public static RoleStore RoleStore => _roleStore = _roleStore ?? new RoleStore(UnitOfWork.Context);
 
-        public static IUserRepository UserRepository => _userRepository = _userRepository ?? new UserRepository(UnitOfWork.Context);
+        public static IUserRepository UserRepository => _userRepository = _userRepository ?? UnitOfWork.GetUserRepository();
         public static IUserService UserService => _userService = _userService ?? new UserService(UserRepository);
 
-        public static IDepartmentRepository DepartmentRepository => _departmentRepository = _departmentRepository ?? new DepartmentRepository(UnitOfWork.Context);
+        public static IDepartmentRepository DepartmentRepository => _departmentRepository = _departmentRepository ?? UnitOfWork.GetDepartmentRepository();
         public static IDepartmentService DepartmentService => _departmentService = _departmentService ?? new DepartmentService(DepartmentRepository);
 
-        public static IEmployeeRepository EmployeeRepository => _employeeRepository = _employeeRepository ?? new EmployeeRepository(UnitOfWork.Context);
+        public static IEmployeeRepository EmployeeRepository => _employeeRepository = _employeeRepository ?? UnitOfWork.GetEmployeeRepository();
         public static IEmployeeService EmployeeService => _employeeService = _employeeService ?? new EmployeeService(EmployeeRepository);
 
         #endregion

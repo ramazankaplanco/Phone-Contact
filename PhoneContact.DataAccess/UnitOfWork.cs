@@ -4,6 +4,7 @@ using PhoneContact.Core.DataAccess.Base;
 using PhoneContact.Core.DataAccess.EntityFramework;
 using PhoneContact.DataAccess.Abstract;
 using PhoneContact.DataAccess.Context;
+using PhoneContact.DataAccess.Repository;
 using System;
 
 #endregion
@@ -25,6 +26,21 @@ namespace PhoneContact.DataAccess
         public IEntityRepositoryBase<T> GetRepository<T>() where T : class, IEntityBase, new()
         {
             return new EntityRepositoryBase<T, DataContext>(Context);
+        }
+
+        public IUserRepository GetUserRepository()
+        {
+            return new UserRepository(Context);
+        }
+
+        public IDepartmentRepository GetDepartmentRepository()
+        {
+            return new DepartmentRepository(Context);
+        }
+
+        public IEmployeeRepository GetEmployeeRepository()
+        {
+            return new EmployeeRepository(Context);
         }
 
         public void Dispose()
